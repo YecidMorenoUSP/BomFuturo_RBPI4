@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+
+    <title>BomFuturo</title>
+
+    <link rel="icon" href="/static/favicon.ico">
+
+    <!-- Boot Strap css Links -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Bootstraps Java Scipts Links -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- JQuery links  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <!-- Links for Footer -->
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Style sheets css files  -->
+    <link rel="stylesheet" href="/static/Main/css/Main.css">
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='Main/css/Main.css') }}"> -->
+
+    <!-- charlist -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+
+    <!--High CHART LIVE  -->
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+    <script src="http://code.highcharts.com/highcharts-more.js"></script>
+    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+<body>
+
+
+    <nav id="nav1" class="navbar navbar-expand-lg navbar-light bg-light">
+
+        <img src="/static/img/logo.png" alt="">
+       
+    </nav>
+
+    <div style="margin: 20px 100px;">
+        {% block content %}
+        {% endblock %}
+    </div>
+    
+<footer class="section footer-classic context-dark bg-image" style="background: #2d3246;">
+
+    <div class="container">
+        <div class="row row-30">
+            <div class="col-md">
+
+                <div class="pr-xl-4">
+               
+                    <p>
+                       Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, placeat. Tempora unde fugiat quisquam voluptate? Illum, quas debitis obcaecati consectetur quae earum deleniti porro. Quibusdam quasi accusamus illo excepturi sit!
+                    </p>
+
+                    <!-- Rights-->
+                    <p class="rights">
+                        <span>©  </span>
+                        <span class="copyright-year">2023</span>
+                        <span> </span>
+                        <span>BomFuturo</span>
+                        <span>. </span><span>All Rights Reserved.</span>
+                    </p>
+
+                </div>
+            </div>
+
+            <br>
+
+            <div class="col-md">
+                <br>
+                <h5>Contacts</h5>
+
+                <dl class="contact-list">
+                    <dt>Name:</dt>
+                    <dd>
+                        Yecid Moreno
+                    </dd>
+                </dl>
+
+                <!-- Email -->
+                <dl class="contact-list">
+                    <dt>email:</dt>
+                    <dd>
+                        <a href="mailto:#">yecidmoeno@usp.br</a>
+                    </dd>
+                </dl>
+
+            </div>
+
+            <br>
+
+        </div>
+    </div>
+   
+</footer>
+
+</body>
+
+</html>
