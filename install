@@ -8,6 +8,7 @@ source env/bin/activate
 python3 -m pip install paho-mqtt
 python3 -m pip install mysql-connector-python
 python3 -m pip install pip flask
+# python3 -m pip install flask_mysqldb
 
 # Linux
 sudo apt-get update

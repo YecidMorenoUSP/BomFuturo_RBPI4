@@ -24,7 +24,7 @@ humidity_blueprint = Blueprint('Humidity', __name__)
 def humidity():
     
     args = request.args
-    print(args["from"])
+    # print(args["from"])
 
     mydb = MySQL.connect()
 

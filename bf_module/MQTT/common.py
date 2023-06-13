@@ -14,3 +14,9 @@ def connect_mqtt(client_id):
     client.on_connect = on_connect
     client.connect(CONFIG_MQTT.broker, CONFIG_MQTT.port)
     return client
+
+def send(client_id="anonimo",topic="LOG",payload="None"):
+    client = connect_mqtt(client_id)
+    client.loop_start()
+    client.publish(topic,payload)
+    None

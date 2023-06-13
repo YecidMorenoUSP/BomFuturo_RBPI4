@@ -45,8 +45,43 @@
     </nav>
 
     <div style="margin: 20px 100px;">
-        {% block content %}
+        {% block mainPlot %}
         {% endblock %}
+    </div>
+
+    <div>
+        <button onclick="myFunction()">Click me</button>
+        <script>
+            function myFunction(){
+                var req_config = $.get('/Config/esp32?Ts=1');
+                var tm = req_config.done(function (result){
+
+                });
+            }
+        </script>
+
+        <button onclick="getNodes()">Get Sensors</button>
+        <div id="sensors_container">
+
+        </div>
+        <script>
+            
+            function getNodes(){
+                var req_config = $.get('/Config/get_sensors');
+                var tm = req_config.done(function (result){        
+                    renderSensors(result)
+                });
+            }
+
+            var aux_result;
+            function renderSensors(result){
+                container = document.getElementById("sensors_container");
+                container.innerHTML = JSON.stringify(result)    
+                aux_result = result;
+
+                
+            }
+        </script>
     </div>
     
 <footer class="section footer-classic context-dark bg-image" style="background: #2d3246;">

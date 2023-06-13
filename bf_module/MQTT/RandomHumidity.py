@@ -22,7 +22,7 @@ def connect_mqtt():
     client.connect(CONFIG.broker, CONFIG.port)
     return client
 
-def publish_loop(client):
+def publish_loop(client: mqtt_client.Client):
     msg_count = 0
     topic = CONFIG.topic_humidity
     

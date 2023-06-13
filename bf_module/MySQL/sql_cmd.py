@@ -12,3 +12,9 @@ SELECT * FROM (
     ORDER BY `date` DESC LIMIT 20 
 ) Q1 ORDER BY `date` ASC;
 """
+
+sql_get_sensors = """
+SELECT `sensor_id`,`type`,`topic`,`description` 
+    FROM `sensor` 
+    WHERE 1;
+"""
