@@ -33,7 +33,17 @@
     </div>
     
     <script>
-        obj = [{"sensor_id":100,"type":"humidity","topic":"S100","description":"esp32 emulado no raspberry"},{"sensor_id":101,"type":"humidity","topic":"S101","description":"tets esp32 emulado no raspberry "}];
+        obj = [{"sensor_id":100,
+                "type":"humidity",
+                "topic":"S100",
+                "last_value":"7",
+                "description":"esp32 emulado no raspberry"},
+
+                {"sensor_id":101,
+                "type":"humidity",
+                "topic":"S101",
+                "last_value":"4",
+                "description":"tets esp32 emulado no raspberry "}];
         con = document.getElementById("sensors_container");
 
         function renderTable(){         
@@ -71,31 +81,41 @@
 
             function createCard(){
                 let col = document.createElement('div');
-                col.className = "col-sm-6";
+                col.className = "col-sm-4";
 
                 let card = document.createElement('div');
                 card.className = "card";
 
                 card.innerHTML ="\
-                <div class='card-header display-4' align='center'> \
+                <div class='card-header display-4 text-white' align='center'> \
                     70%\
                      </div> \
-                <div class=card-body>  \
-                    <h5 class='card-title' >Card title</h5>  \
-                    <p  class='card-text'  >--</p>  \
-                    <p  class='card-text'  ><small class='text-muted'>--</small></p>  \
-                </div>";
+                    <div class=card-body>  \
+                        <h5 class='card-title' >Card title</h5>  \
+                        <p  class='card-text'  >--</p>  \
+                        <p  class='card-text'  ><small class='text-muted'>--</small></p>  \
+                    </div>";
 
                 col.appendChild(card);
                 con.appendChild(col);
-                return card.children[1];
+                return card.children;
             }
 
             obj.forEach((item)=>{
                 let card = createCard();
-                card.children[0].innerHTML = item['topic']
-                card.children[1].innerHTML = item['description']
-                card.children[2].innerHTML = 'Last updated 3 mins ago';
+                card[0].innerHTML = item['last_value']+"%";
+                card[1].children[0].innerHTML = item['topic']
+                card[1].children[1].innerHTML = item['description']
+                card[1].children[2].innerHTML = 'Last updated 3 mins ago';
+
+                if(item['last_value'] <= "3"){
+                    card[0].classList.add('bg-danger');
+                }if(item['last_value'] <= "5"){
+                    card[0].classList.add('bg-warning');
+                }else{
+                    card[0].classList.add('bg-success');
+                }
+
             })
 
             

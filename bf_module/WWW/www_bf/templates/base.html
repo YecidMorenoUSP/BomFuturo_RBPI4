@@ -37,55 +37,41 @@
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
 <body>
 
+    <!-- <img src="/static/img/logo.png" alt=""> -->
 
-    <nav id="nav1" class="navbar navbar-expand-lg navbar-light bg-light">
-
-        <img src="/static/img/logo.png" alt="">
-       
-    </nav>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        
+        <a class="navbar-brand" href="\">
+            <img src="/static/img/logo.png" alt="">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Plot</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/sensors">Sensors</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
 
     <div style="margin: 20px 100px;">
-        {% block mainPlot %}
+        {% block content %}
+        {% endblock %}
+        {% block content2 %}
         {% endblock %}
     </div>
 
-    <div>
-        <button onclick="myFunction()">Click me</button>
-        <script>
-            function myFunction(){
-                var req_config = $.get('/Config/esp32?Ts=1');
-                var tm = req_config.done(function (result){
-
-                });
-            }
-        </script>
-
-        <button onclick="getNodes()">Get Sensors</button>
-        <div id="sensors_container">
-
-        </div>
-        <script>
-            
-            function getNodes(){
-                var req_config = $.get('/Config/get_sensors');
-                var tm = req_config.done(function (result){        
-                    renderSensors(result)
-                });
-            }
-
-            var aux_result;
-            function renderSensors(result){
-                container = document.getElementById("sensors_container");
-                container.innerHTML = JSON.stringify(result)    
-                aux_result = result;
-
-                
-            }
-        </script>
-    </div>
-    
+   
 <footer class="section footer-classic context-dark bg-image" style="background: #2d3246;">
-
+    <div>
+        <a href="/">Main</a>
+        <a href="/sensors">Sensors</a>
+    </div>
     <div class="container">
         <div class="row row-30">
             <div class="col-md">

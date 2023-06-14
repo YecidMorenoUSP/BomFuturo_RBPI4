@@ -14,7 +14,13 @@ SELECT * FROM (
 """
 
 sql_get_sensors = """
-SELECT `sensor_id`,`type`,`topic`,`description` 
-    FROM `sensor` 
-    WHERE 1;
+SELECT s.sensor_id, s.type, s.topic, s.description, hr.date, hr.value as last_value
+FROM sensor s
+    INNER JOIN humidity_reads hr ON s.sensor_id = hr.sensor_id
+    INNER JOIN (
+        SELECT sensor_id, MAX(date) AS max_date
+        FROM humidity_reads
+        GROUP BY sensor_id
+    ) t ON hr.sensor_id = t.sensor_id AND hr.date = t.max_date
+ORDER by sensor_id DESC
 """

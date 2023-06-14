@@ -1,0 +1,98 @@
+{% extends "Main.html" %}
+
+{% block content2 %}
+
+<div id="sensors_container" class="row justify-content-around">
+    
+</div>
+
+<script>
+    function drawSensors(){
+        let con = document.getElementById("sensors_container");
+        
+
+        var req_config = $.get('/Config/get_sensors');
+        var tm = req_config.done(function (obj){ 
+            function createCard(){
+                let col = document.createElement('div');
+                col.className = "col-sm-4";
+
+                let card = document.createElement('div');
+                card.className = "card";
+
+                card.innerHTML ="\
+                <div class='card-header display-4 text-white' align='center'> \
+                    70%\
+                     </div> \
+                    <div class=card-body>  \
+                        <h5 class='card-title' >Card title</h5>  \
+                        <p  class='card-text'  >--</p>  \
+                        <p  class='card-text'  ><small class='text-muted'>--</small></p>  \
+                    </div>";
+
+                col.appendChild(card);
+                con.appendChild(col);
+                return card.children;
+            }
+
+            con.replaceChildren();
+
+            obj.forEach((item)=>{
+                
+                let d1 = Date.now();
+                let d0 = Date.parse(item['date'])
+                
+                var str_uptated = "";
+                var dt = (d1-d0)/1000;
+                if( dt <= 59){
+                    str_uptated = "Last updated " + dt.toFixed(0) +" secs ago"
+                }else{
+                    dt = (dt/60);
+                    if( dt <= 59){
+                        str_uptated = "Last updated " + dt.toFixed(0) +" mins ago"
+                    }else{
+                        dt = (dt/60);
+                        if( dt <= 59){
+                            str_uptated = "Last updated " + dt.toFixed(0) +" hours ago"
+                        }else{
+                            dt = (dt/60);
+                            str_uptated = "Last updated " + dt.toFixed(0) +" days ago"
+                        }
+                    }
+                }
+                
+                
+                let card = createCard();
+                card[0].innerHTML = item['last_value']+"%";
+                card[1].children[0].innerHTML = item['topic']
+                card[1].children[1].innerHTML = item['description']
+                card[1].children[2].innerHTML = str_uptated;
+
+                if(item['last_value'] <= "20"){
+                    card[0].classList.add('bg-danger');
+                }else if(item['last_value'] <= "60"){
+                    card[0].classList.add('bg-warning');
+                }else{
+                    card[0].classList.add('bg-success');
+                }
+                
+                setTimeout(drawSensors, 10000);
+                
+            })
+
+
+        });
+    }
+</script>
+
+<script>
+    $(document).ready(function(){
+        drawSensors();    
+    })
+</script>
+
+<div id="sensors_container">
+
+</div>
+
+{% endblock %}

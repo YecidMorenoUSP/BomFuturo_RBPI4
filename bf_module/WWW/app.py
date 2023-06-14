@@ -25,6 +25,10 @@ except Exception as e:
 def index():
     return render_template('Main.html')
 
+@app.route('/sensors', methods=['GET', 'POST'])
+def sensors_route():
+    return render_template('card_sensors.html')
+
 
 if __name__ == '__main__':
     app.run(debug=True,host="0.0.0.0")

@@ -7,6 +7,7 @@ try:
     from flask import Flask, request, session, send_file
     import random
     import json
+    import datetime
     from time import time
     from random import random
     from flask import Flask, render_template, make_response
@@ -42,19 +43,18 @@ def set_sensor():
 
 @config_blueprint.route('/get_sensors', methods=['GET'])
 def get_nodes():
-    print("Get Nodes");
-    
+        
     mydb = MySQL.connect()
     cur = mydb.cursor()
     cur.execute(MySQL_CMD.sql_get_sensors)
 
-    row_headers=[x[0] for x in cur.description] #this will extract row headers
+    row_headers=[x[0] for x in cur.description]
     rv = cur.fetchall()
     json_data=[]
     for result in rv:
         json_data.append(dict(zip(row_headers,result)))
-      
-    res = json.dumps(json_data);  
+        
+    res = json.dumps(json_data,default=lambda obj: obj.isoformat());  
 
     response = make_response(res,200)
     response.mimetype = 'application/json'

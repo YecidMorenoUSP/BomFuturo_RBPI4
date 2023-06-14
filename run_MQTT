@@ -1,3 +1,3 @@
 source env/bin/activate
 
-python3 bf_module/Services/MQTT_LOG_service.py
+python3 bf_module/Services/MQTT_DB_service.py
