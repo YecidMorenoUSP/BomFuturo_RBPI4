@@ -1,0 +1,81 @@
+<div class="col plot-{{plot_topic}}">
+
+</div>
+
+<script>
+
+    function requestData(data_in)
+    {
+        let chart = data_in["target"]
+        let topic = chart['options']['props']['topic']
+        let cur_time = chart['options']['props']['cur_time']
+
+        var requests = $.get('/Humidity/humidity?topic='+topic+'&from='+cur_time);       
+        
+        var tm = requests.done(function (result)
+        {           
+            console.log(result);
+            if(result["values"].length > 0){
+                if(chart.series[0].data.length == 0){
+                    chart.series[0].setData(result["values"])
+                }else{
+                    result["values"].forEach(val => {
+                        slice = chart.series[0].data.length>100;
+                        chart.series[0].addPoint(val,true,slice);
+                    });
+                }
+                
+            }
+            chart['options']['props']['cur_time'] = result["from"]
+
+            
+
+            setTimeout(requestData, 10000,data_in);
+
+        });
+    }
+
+    $(document).ready(function() {
+        
+        Highcharts.setOptions({
+            plotOptions: {
+                series: {
+                    animation: false
+                }
+            }
+        });
+
+        let cur_chart = new Highcharts.Chart({
+            chart: {
+                renderTo: $('.plot-{{plot_topic}}')[0],
+                defaultSeriesType: 'spline',
+                zoomType: 'x'
+                
+            },
+            title: {
+                text: 'Live humidity of cotton'
+            },
+            xAxis: {
+                type: 'datetime',
+                maxZoom: 100 
+            },
+            yAxis: {
+                min: 0,
+                max: 100,
+                title: {
+                    text: 'Percentage %',
+                }
+            },
+            series: [{
+                name: 'Relative',
+                data: []
+            },],
+            props: {topic:"{{plot_topic}}",
+                    cur_time:0}
+
+        });
+        requestData({"target":cur_chart});
+        
+    });
+
+</script>
