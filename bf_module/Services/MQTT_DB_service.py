@@ -14,22 +14,25 @@ client_id = "raspberry_bf"
 
 def on_humidity(client, userdata, msg):
     
+    print(f"[{msg.topic}] : {msg.payload.decode()}")
+
+    required_keys = {"value","payload"}
     
+    msg_topic = msg.topic.split("/");
+    topic_id =  msg_topic[0]
+
     data = json.loads(msg.payload.decode())
+    
 
-    if "humidity" in data and "sensor_id" in data:
+    if(msg_topic[1] == "humidity"):    
+        if required_keys.issubset(data.keys()):
+            cur = mydb.cursor()
+            cur.callproc("InsertSensorReading",(topic_id,data["value"],"{}"))
+            mydb.commit()
+    
+    
         
-        print(f"[{msg.topic}] : {msg.payload.decode()}")
-
-        H = data.get("humidity")
-        id = data.get("sensor_id")
         
-        mycursor = mydb.cursor()
-        sql = "INSERT INTO humidity_reads (sensor_id, value) VALUES (%s,%s)"
-        val = (id, H)
-        mycursor.execute(sql, val)
-        mydb.commit()
-
 
 
 def subscribe(client: mqtt_client):

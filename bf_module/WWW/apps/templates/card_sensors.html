@@ -1,0 +1,79 @@
+
+{% block block_card_sensors %}
+
+
+
+<div id="sensors_container" class="row justify-content-around"></div>
+
+<script>
+    var div_cards = {};
+
+    function drawSensors(){
+        let con = document.getElementById("sensors_container");  
+
+        var req_config = $.get('/Config/get_sensors');
+        var tm = req_config.done(function (obj){ 
+            
+
+            function sensor_createCard(){
+                let col = document.createElement('div');
+                col.className = "col-sm-4";
+
+                let card = document.createElement('div');
+                card.className = "card";
+
+                card.innerHTML ="\
+                <div class='card-header display-4 text-white' align='center'> \
+                    70%\
+                     </div> \
+                    <div class=card-body>  \
+                        <h5 class='card-title' >Card title</h5>  \
+                        <p  class='card-text'  >--</p>  \
+                        <p  class='card-text'  ><small class='text-muted'>--</small></p>  \
+                    </div>";
+
+                col.appendChild(card);
+                con.appendChild(col);
+                return card.children;
+            }            
+
+            obj.forEach((item)=>{
+                
+                if(div_cards[item['topic']] == undefined ){
+                    let card = sensor_createCard();                    
+                    div_cards[item['topic']] = card;
+                }
+                
+                if(div_cards[item['topic']] != undefined ){
+                    let card = div_cards[item['topic']];
+
+                    card[0].innerHTML = item['last_value']+"%";
+                    card[1].children[0].innerHTML = item['topic']
+                    card[1].children[1].innerHTML = item['description']
+                    card[1].children[2].innerHTML = "Last updated "+item["last_reading_date"];
+
+                    if(item['last_value'] <= "20"){
+                        card[0].classList.add('bg-danger');
+                    }else if(item['last_value'] <= "50"){
+                        card[0].classList.add('bg-warning');
+                    }else{
+                        card[0].classList.add('bg-success');
+                    }
+                }
+            })
+
+            setTimeout(drawSensors, 10000);
+
+        });
+    }
+</script>
+
+<script>
+    $(document).ready(function(){
+        drawSensors();    
+        console.log("{{my_var}}");
+    })
+</script>
+
+
+{% endblock %}

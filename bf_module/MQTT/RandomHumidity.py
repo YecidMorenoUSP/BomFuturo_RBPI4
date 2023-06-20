@@ -24,20 +24,29 @@ def connect_mqtt():
 
 def publish_loop(client: mqtt_client.Client):
     msg_count = 0
-    topic = CONFIG.topic_humidity
-    
-    
+    topic = "esp32_1/humidity";        
 
     while True:
-        time.sleep(2)
+        time.sleep(4)
 
         H = random.random()*20+40
         H = round(H,2)
 
-        msg = {"sensor_id":100,
-               "humidity":H}
+        msg = {"value":H,
+               "payload":{"values":[1,2,3]}
+               }
 
-        result = client.publish(topic, json.dumps(msg))
+        msg1 = {"value":round(random.random()*20+40,2),
+               "payload":{"values":[1,2,3]}
+               }
+
+        msg2 = {"value":round(random.random()*20+40,2),
+               "payload":{"values":[1,2,3]}
+               }
+
+        result = client.publish("esp32_1/humidity", json.dumps(msg1))
+        result = client.publish("esp32_2/humidity", json.dumps(msg2))
+
         status = result[0]
         if status == 0:
             print(f"{TAG} {json.dumps(msg)}")
